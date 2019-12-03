@@ -9,6 +9,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import bo.upb.programacion3.codelabpokedex.model.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar; // Usaremos un toolbar personalizado, para agregar el icono del Drawer a la izquierda
     private ActionBarDrawerToggle drawerToggle; // El objeto del botón del drawer
     private DrawerLayout drawerLayout; // Nuestro DrawerLayout
+    private ImageView drawerHeaderLayoutImageView;
+    private TextView drawerHeaderLayoutTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
                     drawerLayout.openDrawer(GravityCompat.START); // Podemos abrir y cerrar nuestro drawer programáticamente!!
                 }
             });
+            drawerHeaderLayoutImageView = findViewById(R.id.drawerHeaderLayoutImageView);
+            drawerHeaderLayoutTextView = findViewById(R.id.drawerHeaderLayoutTextView);
+
+            drawerHeaderLayoutImageView.setImageDrawable(getResources().getDrawable(UserLogged.getInstance().getImg()));
+            drawerHeaderLayoutTextView.setText(UserLogged.getInstance().getUsername());
         }
     }
 

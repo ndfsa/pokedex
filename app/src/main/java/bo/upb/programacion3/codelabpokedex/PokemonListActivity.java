@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import bo.upb.programacion3.codelabpokedex.adapters.PokemonListViewAdapter;
@@ -31,11 +32,19 @@ public class PokemonListActivity extends AppCompatActivity {
         initToolbar();
 
         final List<Pokemon> pokemonList = PokemonUtils.getPokemons();
-        PokemonListViewAdapter adapter = new PokemonListViewAdapter(this, pokemonList);
+        List<Pokemon> fav = new LinkedList<>();
+        for (Pokemon pokemon: pokemonList) {
+            if (UserLogged.getInstance().getFavPokemon().contains(pokemon.getId())){
+                fav.add(pokemon);
+            }
+        }
+        final List<Pokemon> res = fav;
+
+        PokemonListViewAdapter adapter = new PokemonListViewAdapter(this, res);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Pokemon pokemon = pokemonList.get(position);
+                Pokemon pokemon = res.get(position);
                 Intent intent = new Intent(PokemonListActivity.this, PokemonDetailsActivity.class);
                 intent.putExtra(Constants.POKEMON_SELECTED, gson.toJson(pokemon));
                 startActivity(intent);
